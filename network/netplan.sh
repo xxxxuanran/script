@@ -9,12 +9,18 @@ fi
 install_packages() {
     apt-get update
     apt-get install -y netplan.io
+    apt-get remove ifupdown
 }
 
 FILE_FULL_PATH=/etc/netplan/50-static.yaml
 
 # Get the name of the first non-lo interface
 INTERFACE=$(ip -o link | awk -F': ' '$2 != "lo" {print $2}' | head -n 1 | cut -d'@' -f1)
+ALTNAME_LIST=$(ip -o link show $INTERFACE | grep -o 'altname enp[^ ]*' | cut -d' ' -f2)
+
+if [ -n "$ALTNAME_LIST" ]; then
+    INTERFACE=$(echo "$ALTNAME_LIST" | head -n 1)
+fi
 
 echo "Selected interface: $INTERFACE"
 
@@ -83,18 +89,20 @@ fi
 
 # Add common configuration
 cat << EOF >> $FILE_FULL_PATH
+      match:
+        macaddress: $MAC_ADDRESS
       nameservers:
         addresses:
           - 2620:fe::fe
-          - 9.9.9.9
-      macaddress: $MAC_ADDRESS
-      ipv6-privacy: true
+          - 1.1.1.1
 EOF
 
 echo "Netplan configuration has been generated in $FILE_FULL_PATH"
 cat $FILE_FULL_PATH
 
+chmod 0600 $FILE_FULL_PATH
 
+install_packages
 
 # Apply the netplan configuration
 netplan apply

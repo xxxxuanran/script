@@ -12,7 +12,7 @@ mkdir -p /etc/apt/sources.list.d/bak
 # ap-northeast-1.ec2.archive.ubuntu.com
 # asia-northeast1.gce.archive.ubuntu.com
 echo "http://azure.archive.ubuntu.com/ubuntu/ priority:5" > /etc/apt/mirrors/ubuntu.list
-echo "http://archive.ubuntu.com/ubuntu/" > /etc/apt/mirrors/ubuntu.list
+echo "http://archive.ubuntu.com/ubuntu/" >> /etc/apt/mirrors/ubuntu.list
 echo "http://security.ubuntu.com/ubuntu/" > /etc/apt/mirrors/ubuntu-security.list
 mv /etc/apt/sources.list.d/*.sources /etc/apt/sources.list.d/bak
 

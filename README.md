@@ -2,6 +2,14 @@
 
 ## Basic configuration
 
+## Bash config
+
+```shell
+curl -o ~/.bashrc https://raw.githubusercontent.com/xxxxuanran/scripts/master/bashrc
+curl -o ~/.bash_aliases https://raw.githubusercontent.com/xxxxuanran/scripts/master/bash_aliases
+curl -o ~/.profile https://raw.githubusercontent.com/xxxxuanran/scripts/master/profile
+```
+
 ### deb822 format
 
 ```shell
